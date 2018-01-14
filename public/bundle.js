@@ -25052,13 +25052,36 @@
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            count: 0
+	            count: 0,
+	            countdownStatus: 'stopped'
 	        };
+	    },
+
+	    componentDidUpdate: function componentDidUpdate(prevProps, prevStates) {
+	        if (this.state.countdownStatus != prevStates.countdownStatus) {
+	            switch (this.state.countdownStatus) {
+	                case 'started':
+	                    this.startTimer();
+	                    break;
+	            }
+	        }
+	    },
+
+	    startTimer: function startTimer() {
+	        var _this = this;
+
+	        this.timer = setInterval(function () {
+	            var newCount = _this.state.count - 1;
+	            _this.setState({
+	                count: newCount >= 0 ? newCount : 0
+	            });
+	        }, 1000);
 	    },
 
 	    handleSetCountdown: function handleSetCountdown(seconds) {
 	        this.setState({
-	            count: seconds
+	            count: seconds,
+	            countdownStatus: 'started'
 	        });
 	    },
 
@@ -25138,7 +25161,7 @@
 	        e.preventDefault();
 	        var strSeconds = this.refs.seconds.value;
 
-	        if (strSeconds.match(/^[0-9]*$/)) {
+	        if (strSeconds.match(/^[0-9]*$/) && strSeconds != '') {
 	            this.refs.seconds.value = '';
 	            this.props.onSetCountdown(parseInt(strSeconds, 10));
 	        }
