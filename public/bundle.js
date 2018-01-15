@@ -25021,15 +25021,35 @@
 	'use strict';
 
 	var React = __webpack_require__(8);
+	var Clock = __webpack_require__(227);
+	var Controls = __webpack_require__(229);
 
 	var Timer = React.createClass({
 	    displayName: 'Timer',
 
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            count: 0,
+	            timerStatus: 'stopped'
+	        };
+	    },
+
+	    handleStatusChange: function handleStatusChange(newTimerStatus) {
+	        console.log('New Status', newTimerStatus);
+	    },
+
 	    render: function render() {
+	        var _state = this.state,
+	            count = _state.count,
+	            timerStatus = _state.timerStatus;
+
+
 	        return React.createElement(
-	            'p',
+	            'div',
 	            null,
-	            'Timer.jsx'
+	            React.createElement(Clock, { totalSeconds: count }),
+	            React.createElement(Controls, { countdownStatus: timerStatus, onStatusChange: this.handleStatusChange })
 	        );
 	    }
 	});
@@ -25278,7 +25298,9 @@
 	                    { className: 'button secondary', onClick: _this2.onStatusChange('paused') },
 	                    'Pause'
 	                );
-	            } else if (countdownStatus === 'paused') {
+	            } else {
+	                // removed:  if(countdownStatus === 'paused')  so that start button will show in paused and stopped cases.
+
 	                return React.createElement(
 	                    'button',
 	                    { className: 'button primary', onClick: _this2.onStatusChange('started') },
