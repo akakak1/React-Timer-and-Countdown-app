@@ -49,7 +49,7 @@ var Countdown = React.createClass({
 
     startTimer:function(){
         this.timer = setInterval(()=> {
-            var newCount = this.state.count - 1 ;
+            var newCount = this.state.count - 1 ;  //Would I be able to access 'this' if this was not an arrow function
             this.setState({
                 count: newCount >= 0 ? newCount : 0
             })
