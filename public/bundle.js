@@ -25074,14 +25074,40 @@
 	        }
 	    },
 
+	    // SOME METHODS
+	    // componentWillUpdate:function(nextProps, nextState){
+
+	    // },
+
+	    // componentWillMount:function(){
+	    //     console.log('Component will mount');
+	    // },
+
+	    // componentDidMount:function(){
+	    //     console.log('Component did mount')
+	    // },
+
+	    componentWillUnmount: function componentWillUnmount() {
+	        // console.log('Component will unmount');
+	        clearInterval(this.timer);
+	        this.timer = undefined;
+	    },
+
 	    startTimer: function startTimer() {
 	        var _this = this;
 
 	        this.timer = setInterval(function () {
 	            var newCount = _this.state.count - 1;
 	            _this.setState({
-	                count: newCount >= 0 ? newCount : 0 // TODO: When count becomes 0 then clearInterval
+	                count: newCount >= 0 ? newCount : 0
 	            });
+
+	            if (newCount === 0) {
+	                //No need to countdown once count reaches 0 
+	                _this.setState({
+	                    countdownStatus: 'stopped'
+	                });
+	            }
 	        }, 1000);
 	    },
 
@@ -25233,6 +25259,11 @@
 	            _this.props.onStatusChange(newStatus);
 	        };
 	    },
+
+	    // A LIFECYCLE METHOD
+	    // componentWillReceiveProps:function(newProps){
+	    //     console.log('Component will receive props', newProps.countdownStatus);  //DOUBT: Why is it being called even if only count state changes ??
+	    // },
 
 	    render: function render() {
 	        var _this2 = this;

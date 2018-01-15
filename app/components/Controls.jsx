@@ -12,6 +12,11 @@ var Controls = React.createClass({
         }
     },
 
+    // A LIFECYCLE METHOD
+    // componentWillReceiveProps:function(newProps){
+    //     console.log('Component will receive props', newProps.countdownStatus);  //DOUBT: Why is it being called even if only count state changes ??
+    // },
+
     render:function(){
 
         var {countdownStatus} = this.props;
